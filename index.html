@@ -3,184 +3,478 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For Kevin ❤️</title>
+  <title>For My Dearest Kevin ❤️</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
   
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
+  <style>
+    /* Custom Styling & Animations */
     body {
-      background: linear-gradient(135deg, #fff5f5 0%, #fed7aa 50%, #fbcfe8 100%);
-      font-family: 'Nunito', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffe4e6 40%, #fecdd3 70%, #fda4af 100%);
       color: #4a3e3d;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
       overflow-x: hidden;
-      position: relative;
     }
 
-    /* Floating Hearts Background Background Effect */
-    .heart-bg {
+    .font-serif-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-handwriting {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Glassmorphism Effect */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 40px rgba(225, 29, 72, 0.12);
+    }
+
+    /* Floating Heart Particles */
+    .floating-heart {
       position: fixed;
-      top: -10vh;
-      font-size: 1.5rem;
-      color: rgba(244, 114, 182, 0.4);
-      animation: fall 7s linear infinite;
-      z-index: 0;
       pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear infinite;
     }
 
-    @keyframes fall {
+    @keyframes floatUp {
       0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
+        transform: translateY(105vh) scale(0.8) rotate(0deg);
+        opacity: 0.9;
       }
       100% {
-        transform: translateY(110vh) rotate(360deg);
+        transform: translateY(-10vh) scale(1.2) rotate(360deg);
         opacity: 0;
       }
     }
 
-    .container {
-      max-width: 650px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      padding: 35px 28px;
-      box-shadow: 0 20px 40px rgba(225, 112, 133, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+    /* Interactive Envelope Styles */
+    .envelope-wrapper {
+      perspective: 1000px;
+    }
+
+    .envelope {
+      width: 320px;
+      height: 220px;
+      background: #f43f5e;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(225, 29, 72, 0.3);
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .envelope:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(225, 29, 72, 0.4);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 120px solid #e11d48;
+      transform-origin: top;
+      transition: transform 0.6s ease-in-out;
+      z-index: 3;
+    }
+
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
       z-index: 1;
+    }
+
+    .seal {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      background: #ffe4e6;
+      border: 3px solid #be123c;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      font-size: 1.6rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: opacity 0.4s ease;
+    }
+
+    /* Flip Card Styles */
+    .flip-card {
+      perspective: 1000px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
       text-align: center;
-      animation: fadeIn 1.2s ease-in-out;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
     }
-
-    h1 {
-      font-family: 'Caveat', cursive;
-      font-size: 2.8rem;
-      color: #e11d48;
-      margin-bottom: 20px;
-    }
-
-    /* Video Player Styling */
-    .video-card {
+    .flip-card-front, .flip-card-back {
+      position: absolute;
       width: 100%;
-      max-width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      margin-bottom: 30px;
-      background: #000;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
     }
 
-    video {
-      width: 100%;
-      max-height: 400px;
-      display: block;
-      object-fit: cover;
-      border-radius: 18px;
+    /* Glow Button Animation */
+    .glow-btn {
+      animation: pulseGlow 2s infinite;
     }
 
-    /* Letter Body */
-    .letter {
-      text-align: left;
-      line-height: 1.8;
-      font-size: 1.05rem;
-      color: #4a4a4a;
-    }
-
-    .letter p {
-      margin-bottom: 18px;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 14px 18px;
-      border-radius: 14px;
-      border-left: 4px solid #f43f5e;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-    }
-
-    .signature {
-      margin-top: 25px;
-      text-align: right;
-      font-family: 'Caveat', cursive;
-      font-size: 2rem;
-      color: #e11d48;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 24px 18px;
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
       }
-      h1 {
-        font-size: 2.3rem;
-      }
-      .letter {
-        font-size: 0.98rem;
+      50% {
+        box-shadow: 0 0 30px rgba(244, 63, 94, 0.8);
       }
     }
   </style>
 </head>
-<body>
+<body class="relative flex flex-col items-center justify-center p-4 md:p-8">
 
-  <!-- Background Floating Hearts -->
-  <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-bg');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 4 + 's';
-      heart.style.fontSize = Math.random() * 15 + 15 + 'px';
-      document.body.appendChild(heart);
+  <!-- Floating Hearts Background Container -->
+  <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
 
-      setTimeout(() => {
-        heart.remove();
-      }, 7000);
-    }
-    setInterval(createHeart, 600);
-  </script>
+  <!-- Audio Toggle Control (Optional Background Atmosphere) -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="bg-music-btn" onclick="toggleAudio()" class="glass-card px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-rose-700 flex items-center gap-2 hover:bg-white/90 transition shadow-md">
+      <span id="music-icon">🎵</span> <span id="music-text">Play Romantic Tune</span>
+    </button>
+  </div>
 
-  <div class="container">
-    <h1>To My Dearest Kevin ❤️</h1>
-
-    <!-- Video Section -->
-    <div class="video-card">
-      <video controls playsinline poster="cover.jpg">
-        <source src="video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+  <!-- ENVELOPE OVERLAY (INTRO SCREEN) -->
+  <div id="envelope-screen" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-rose-100/90 backdrop-blur-md px-4 transition-opacity duration-1000">
+    <div class="text-center mb-8">
+      <h1 class="font-serif-title text-3xl md:text-4xl font-bold text-rose-900 mb-2">A Special Message For You</h1>
+      <p class="text-rose-600 font-medium">Tap the seal to open your letter, Kevin 💕</p>
     </div>
 
-    <!-- Letter Section -->
-    <div class="letter">
-      <p>I love you, Kevin. Thank you for everything you’ve always done for me.</p>
-
-      <p>I have to admit that at first, I was so scared to reach out to you because I had no idea if you were already with someone else or not. Even so, I knew I would always be happy for you no matter what.</p>
-
-      <p>These days, I’ve been working really hard. I have clear life goals now, and they became even clearer with you in my life. I truly want to spend my life with you. I want to wake up next to you, hug you, and cook together.</p>
-
-      <p>Looking back at when I was still in school, it felt like just a distant dream, which was why I didn't pay enough attention to you back then. I’m so sorry for that. But now, it feels like that dream is finally coming close to reality, and we'll probably see each other very soon.</p>
-
-      <p>If there’s ever anything on your mind or anything you're unsure about regarding me, please talk to me, love. I will always hold your hand. I really don't want to lose you again—I don't think I could handle that.</p>
-
-      <p>I want you to know that I love you so much, and I will always be by your side, love.</p>
-
-      <div class="signature">Forever yours, 💕</div>
+    <div class="envelope-wrapper">
+      <div id="envelope" class="envelope" onclick="openEnvelope()">
+        <div class="envelope-flap"></div>
+        <div id="seal" class="seal">❤️</div>
+        <div class="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold pt-10">
+          <span>To: Kevin 💌</span>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- MAIN ROMANTIC CONTENT CONTAINER -->
+  <main id="main-content" class="w-full max-w-2xl z-10 opacity-0 transition-opacity duration-1000 my-8">
+
+    <!-- Header Section -->
+    <header class="text-center mb-8">
+      <div class="inline-block px-4 py-1.5 rounded-full bg-rose-100 border border-rose-200 text-rose-600 text-xs md:text-sm font-semibold tracking-wide uppercase mb-3 shadow-sm">
+        🇵🇭 For My Dearest Kevin 🇹🇭
+      </div>
+      <h1 class="font-serif-title text-4xl md:text-5xl font-bold text-rose-900 mb-2">
+        My Heart belongs to You
+      </h1>
+      <p class="font-handwriting text-2xl md:text-3xl text-rose-600">Every moment with you is a dream come true...</p>
+    </header>
+
+    <!-- Video Player Container -->
+    <section class="mb-10">
+      <div class="glass-card p-3 md:p-4 rounded-3xl shadow-xl border border-rose-200/60">
+        <div class="relative w-full rounded-2xl overflow-hidden bg-black shadow-inner">
+          <video id="love-video" controls playsinline class="w-full max-h-[420px] object-cover rounded-2xl">
+            <source src="video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <p class="text-center text-xs text-rose-500 font-medium mt-3 flex items-center justify-center gap-1">
+          <span>🎥</span> Our special memories together
+        </p>
+      </div>
+    </section>
+
+    <!-- Love Letter Section -->
+    <section class="glass-card rounded-3xl p-6 md:p-10 mb-10 shadow-xl border border-white">
+      <div class="flex items-center justify-between border-b border-rose-100 pb-4 mb-6">
+        <h2 class="font-serif-title text-2xl font-bold text-rose-800 flex items-center gap-2">
+          <span>💌</span> My Dearest Kevin,
+        </h2>
+        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-rose-100 text-rose-600">Always & Forever</span>
+      </div>
+
+      <div class="space-y-5 text-gray-700 leading-relaxed text-base md:text-lg font-normal">
+        <p class="bg-rose-50/60 p-4 rounded-2xl border-l-4 border-rose-400">
+          I love you, Kevin. Thank you for everything you’ve always done for me.
+        </p>
+
+        <p class="bg-rose-50/60 p-4 rounded-2xl border-l-4 border-rose-400">
+          I have to admit that at first, I was so scared to reach out to you because I had no idea if you were already with someone else or not. Even so, I knew I would always be happy for you no matter what.
+        </p>
+
+        <p class="bg-rose-50/60 p-4 rounded-2xl border-l-4 border-rose-400">
+          These days, I’ve been working really hard. I have clear life goals now, and they became even clearer with you in my life. I truly want to spend my life with you. I want to wake up next to you, hug you, and cook together.
+        </p>
+
+        <p class="bg-rose-50/60 p-4 rounded-2xl border-l-4 border-rose-400">
+          Looking back at when I was still in school, it felt like just a distant dream, which was why I didn't pay enough attention to you back then. I’m so sorry for that. But now, it feels like that dream is finally coming close to reality, and we'll probably see each other very soon.
+        </p>
+
+        <p class="bg-rose-50/60 p-4 rounded-2xl border-l-4 border-rose-400">
+          If there’s ever anything on your mind or anything you're unsure about regarding me, please talk to me, love. I will always hold your hand. I really don't want to lose you again—I don't think I could handle that.
+        </p>
+
+        <p class="bg-rose-50/60 p-4 rounded-2xl border-l-4 border-rose-500 font-medium text-rose-900">
+          I want you to know that I love you so much, and I will always be by your side, love.
+        </p>
+      </div>
+
+      <div class="mt-8 text-right">
+        <p class="font-handwriting text-3xl font-bold text-rose-600">Forever Yours,</p>
+        <p class="text-sm font-semibold text-rose-400 mt-1">With all my love ❤️</p>
+      </div>
+    </section>
+
+    <!-- Tagalog Love Phrases (Filipino Touch Section) -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 mb-10 border border-rose-200">
+      <div class="text-center mb-6">
+        <span class="text-2xl">🇵🇭</span>
+        <h3 class="font-serif-title text-2xl font-bold text-rose-900 mt-1">Words From My Heart in Tagalog</h3>
+        <p class="text-xs text-rose-500 mt-1">Tap each card to flip and reveal the meaning!</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Card 1 -->
+        <div class="flip-card h-28 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-rose-500 text-white font-bold text-lg shadow-md border border-rose-400">
+              "Mahal Kita" ❤️
+            </div>
+            <div class="flip-card-back bg-white text-rose-800 font-semibold text-sm shadow-md border border-rose-200">
+              I Love You with all my heart
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="flip-card h-28 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-rose-500 text-white font-bold text-lg shadow-md border border-rose-400">
+              "Ikaw Lang" 👑
+            </div>
+            <div class="flip-card-back bg-white text-rose-800 font-semibold text-sm shadow-md border border-rose-200">
+              Only You, now and forever
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="flip-card h-28 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-rose-500 text-white font-bold text-lg shadow-md border border-rose-400">
+              "Palagi" 🤝
+            </div>
+            <div class="flip-card-back bg-white text-rose-800 font-semibold text-sm shadow-md border border-rose-200">
+              Always by your side
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Tagalog Message Generator -->
+      <div class="mt-8 bg-white/70 rounded-2xl p-5 text-center border border-rose-100 shadow-sm">
+        <p id="tagalog-quote" class="font-serif-title text-lg md:text-xl text-rose-800 italic font-semibold">
+          "Ikaw ang aking pangarap na natupad."
+        </p>
+        <p id="tagalog-translation" class="text-xs text-rose-500 mt-1">
+          (You are my dream come true.)
+        </p>
+        <button onclick="generateTagalogNote()" class="mt-4 px-5 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold text-xs rounded-full transition shadow-sm border border-rose-200">
+          ✨ Tap for another sweet Tagalog note
+        </button>
+      </div>
+    </section>
+
+    <!-- Interactive Hold Hand Button (Confetti Trigger) -->
+    <section class="text-center mb-12">
+      <button onclick="triggerLoveExplosion()" class="glow-btn bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-3 mx-auto">
+        <span>Hold My Hand Forever</span> 🤝❤️
+      </button>
+      <p class="text-xs text-rose-500 mt-3 font-medium">Click to send a million hugs & love to Kevin!</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-rose-400 pb-8">
+      Made with endless love for Kevin 💕 | Forever & Always
+    </footer>
+
+  </main>
+
+  <!-- Optional Background Audio Element -->
+  <audio id="romantic-audio" loop preload="auto">
+    <!-- Free royalty-free piano romance track placeholder -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    // Create Background Floating Hearts
+    function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const heartArr = ['❤️', '💖', '💕', '💗', '✨', '🌸'];
+      
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerHTML = heartArr[Math.floor(Math.random() * heartArr.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.fontSize = (Math.random() * 14 + 14) + 'px';
+        container.appendChild(heart);
+      }
+    }
+
+    // Open Envelope Function
+    function openEnvelope() {
+      const envelope = document.getElementById('envelope');
+      const envelopeScreen = document.getElementById('envelope-screen');
+      const mainContent = document.getElementById('main-content');
+      const audio = document.getElementById('romantic-audio');
+
+      envelope.classList.add('open');
+      
+      // Heart Explosion Effect on Envelope Click
+      confetti({
+        particleCount: 70,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+
+      // Try playing audio softly
+      audio.volume = 0.3;
+      audio.play().catch(() => {
+        console.log("Audio autoplay prevented by browser. User can play manually.");
+      });
+
+      setTimeout(() => {
+        envelopeScreen.style.opacity = '0';
+        setTimeout(() => {
+          envelopeScreen.style.display = 'none';
+          mainContent.style.opacity = '1';
+        }, 800);
+      }, 700);
+    }
+
+    // Audio Toggle Function
+    let isPlaying = false;
+    function toggleAudio() {
+      const audio = document.getElementById('romantic-audio');
+      const icon = document.getElementById('music-icon');
+      const text = document.getElementById('music-text');
+
+      if (!isPlaying) {
+        audio.volume = 0.4;
+        audio.play();
+        icon.innerHTML = '🔊';
+        text.innerHTML = 'Pause Tune';
+        isPlaying = true;
+      } else {
+        audio.pause();
+        icon.innerHTML = '🎵';
+        text.innerHTML = 'Play Romantic Tune';
+        isPlaying = false;
+      }
+    }
+
+    // Tagalog Sweet Quotes Generator
+    const tagalogNotes = [
+      { quote: "Ikaw ang aking pangarap na natupad.", trans: "You are my dream come true." },
+      { quote: "Napakaswerte ko dahil dumating ka sa buhay ko.", trans: "I'm so lucky you came into my life." },
+      { quote: "Sabik na akong makapiling ka at yakapin ka nang mahigpit.", trans: "I can't wait to be with you and hug you tightly." },
+      { quote: "Ikaw lang ang mahal ko, Kevin.", trans: "You are the only one I love, Kevin." },
+      { quote: "Hawak-kamay tayong haharap sa hinaharap.", trans: "Hand in hand, we will face the future together." }
+    ];
+
+    let currentNoteIndex = 0;
+    function generateTagalogNote() {
+      currentNoteIndex = (currentNoteIndex + 1) % tagalogNotes.length;
+      const quoteElem = document.getElementById('tagalog-quote');
+      const transElem = document.getElementById('tagalog-translation');
+
+      quoteElem.style.opacity = '0';
+      transElem.style.opacity = '0';
+
+      setTimeout(() => {
+        quoteElem.innerHTML = `"${tagalogNotes[currentNoteIndex].quote}"`;
+        transElem.innerHTML = `(${tagalogNotes[currentNoteIndex].trans})`;
+        quoteElem.style.opacity = '1';
+        transElem.style.opacity = '1';
+      }, 300);
+    }
+
+    // Confetti Explosion on Hold Hand Button Click
+    function triggerLoveExplosion() {
+      // Big heart celebration
+      const duration = 3 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#f43f5e', '#fda4af', '#e11d48', '#ffffff']
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#f43f5e', '#fda4af', '#e11d48', '#ffffff']
+        });
+
+        if (Date.now() < animationEnd) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    // Initialize on Page Load
+    window.onload = function() {
+      createHearts();
+    };
+  </script>
 </body>
 </html>
