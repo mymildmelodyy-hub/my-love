@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Kevin ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5f5 0%, #fed7aa 50%, #fbcfe8 100%);
+      font-family: 'Nunito', sans-serif;
+      color: #4a3e3d;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating Hearts Background Background Effect */
+    .heart-bg {
+      position: fixed;
+      top: -10vh;
+      font-size: 1.5rem;
+      color: rgba(244, 114, 182, 0.4);
+      animation: fall 7s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      max-width: 650px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 35px 28px;
+      box-shadow: 0 20px 40px rgba(225, 112, 133, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      z-index: 1;
+      text-align: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 2.8rem;
+      color: #e11d48;
+      margin-bottom: 20px;
+    }
+
+    /* Video Player Styling */
+    .video-card {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+      background: #000;
+    }
+
+    video {
+      width: 100%;
+      max-height: 400px;
+      display: block;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    /* Letter Body */
+    .letter {
+      text-align: left;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      color: #4a4a4a;
+    }
+
+    .letter p {
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 14px 18px;
+      border-radius: 14px;
+      border-left: 4px solid #f43f5e;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .signature {
+      margin-top: 25px;
+      text-align: right;
+      font-family: 'Caveat', cursive;
+      font-size: 2rem;
+      color: #e11d48;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 18px;
+      }
+      h1 {
+        font-size: 2.3rem;
+      }
+      .letter {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Floating Hearts -->
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-bg');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+      heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    setInterval(createHeart, 600);
+  </script>
+
+  <div class="container">
+    <h1>To My Dearest Kevin ❤️</h1>
+
+    <!-- Video Section -->
+    <div class="video-card">
+      <video controls playsinline poster="cover.jpg">
+        <source src="video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Letter Section -->
+    <div class="letter">
+      <p>I love you, Kevin. Thank you for everything you’ve always done for me.</p>
+
+      <p>I have to admit that at first, I was so scared to reach out to you because I had no idea if you were already with someone else or not. Even so, I knew I would always be happy for you no matter what.</p>
+
+      <p>These days, I’ve been working really hard. I have clear life goals now, and they became even clearer with you in my life. I truly want to spend my life with you. I want to wake up next to you, hug you, and cook together.</p>
+
+      <p>Looking back at when I was still in school, it felt like just a distant dream, which was why I didn't pay enough attention to you back then. I’m so sorry for that. But now, it feels like that dream is finally coming close to reality, and we'll probably see each other very soon.</p>
+
+      <p>If there’s ever anything on your mind or anything you're unsure about regarding me, please talk to me, love. I will always hold your hand. I really don't want to lose you again—I don't think I could handle that.</p>
+
+      <p>I want you to know that I love you so much, and I will always be by your side, love.</p>
+
+      <div class="signature">Forever yours, 💕</div>
+    </div>
+  </div>
+
+</body>
+</html>
